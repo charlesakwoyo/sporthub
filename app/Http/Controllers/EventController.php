@@ -150,4 +150,15 @@ class EventController extends Controller
         return redirect()->route('dashboard.tickets')
             ->with('success', 'You have successfully registered for ' . $event->title);
     }
+
+    /**
+     * Show the form for creating a new event.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        $categories = \App\Models\EventCategory::all();
+        return view('dashboard.events.create', compact('categories'));
+    }
 }

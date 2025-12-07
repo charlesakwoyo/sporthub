@@ -10,7 +10,7 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ config('app.name', 'SportHub Arena') }} | @yield('title', 'Home')">
+    <meta property="og:title" content="{{ config('app.name', 'SportHub Arena') }} ">
     <meta property="og:description" content="@yield('description', 'Your premier destination for sports events, news, and community.')">
     <meta property="og:image" content="@yield('og:image', asset('images/og-image.jpg'))">
 
@@ -21,7 +21,7 @@
     <meta name="twitter:description" content="@yield('description', 'Your premier destination for sports events, news, and community.')">
     <meta name="twitter:image" content="@yield('og:image', asset('images/og-image.jpg'))">
 
-    <title>{{ config( 'SportHub Arena') }}  @yield( 'Home')</title>
+    <title>SportHub @yield(' Home')</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">

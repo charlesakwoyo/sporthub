@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home - SportHub')
+@section( 'Home - SportHub')
 
 @push('styles')
 <style>

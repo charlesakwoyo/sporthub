@@ -1,5 +1,5 @@
 // resources/views/dashboard/index.blade.php
-@extends('dashboard.layouts.app')
+@extends('dashboard.layout')
 
 @section('title', 'Dashboard')
 

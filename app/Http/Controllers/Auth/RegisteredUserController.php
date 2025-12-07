@@ -50,9 +50,10 @@ class RegisteredUserController extends Controller
             $user->update(['profile_photo' => $path]);
         }
 
-        event(new Registered($user));
         Auth::login($user);
+        event(new Registered($user));
 
-        return redirect(route('dashboard.index', absolute: false));
+        // Redirect to the intended URL or dashboard
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 }

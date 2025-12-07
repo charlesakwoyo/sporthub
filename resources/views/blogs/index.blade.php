@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 @endphp
 
 @section('content')
-<div class="bg-gray-50 py-8">
+<div class="bg-gray-50 pt-24 pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Page Header -->
         <div class="text-center mb-12">

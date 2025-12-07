@@ -32,8 +32,8 @@ class DashboardController extends Controller
 
         // Get upcoming events
         $upcomingEvents = Event::with('category')
-            ->where('start_date', '>=', now())
-            ->orderBy('start_date', 'asc')
+            ->where('start_datetime', '>=', now())
+            ->orderBy('start_datetime', 'asc')
             ->take(5)
             ->get();
 

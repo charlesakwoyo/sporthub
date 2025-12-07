@@ -111,10 +111,10 @@
                     <div class="flex items-center">
                         <div class="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-md p-2">
                             <span class="text-blue-600 dark:text-blue-300 font-medium text-sm">
-                                {{ $event->start_date->format('M') }}
+                                {{ $event->start_datetime->format('M') }}
                             </span>
                             <div class="text-center text-blue-800 dark:text-blue-200 font-bold">
-                                {{ $event->start_date->format('d') }}
+                                {{ $event->start_datetime->format('d') }}
                             </div>
                         </div>
                         <div class="ml-4">
@@ -125,7 +125,7 @@
                         </div>
                         <div class="ml-auto">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                                {{ $event->start_date->diffForHumans() }}
+                                {{ $event->start_datetime->diffForHumans() }}
                             </span>
                         </div>
                     </div>
@@ -223,7 +223,7 @@
                 @endforelse
             </div>
             <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 text-right">
-                <a href="{{ route('admin.contact.messages') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                <a href="{{ route('admin.contact-messages.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
                     View all messages
                 </a>
             </div>

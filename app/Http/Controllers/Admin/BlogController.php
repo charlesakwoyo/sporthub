@@ -21,7 +21,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $posts = Blog::with(['category', 'author', 'tags'])
+        $posts = Blog::with(['category', 'author'])
             ->latest()
             ->paginate(15);
 
@@ -38,11 +38,9 @@ class BlogController extends Controller
     public function create()
     {
         $categories = BlogCategory::all();
-        $tags = Tag::all();
 
         return view('admin.blogs.create', [
             'categories' => $categories,
-            'tags' => $tags,
         ]);
     }
 

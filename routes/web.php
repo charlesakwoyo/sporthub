@@ -42,39 +42,13 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 require __DIR__.'/auth.php';
 
 // ----------------------------
-// User Dashboard Routes
+// Admin Panel Routes (must come before user dashboard routes)
 // ----------------------------
-Route::middleware(['auth', 'verified'])->group(function () {
-    // Dashboard at root URL
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-    // Other dashboard routes with prefix
-    Route::prefix('dashboard')
-        ->name('dashboard.')
-        ->group(function () {
-            // Profile
-            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-            Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-            Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-            // User Events
-            Route::get('/events', [ProfileController::class, 'events'])->name('events');
-            Route::get('/events/create', [ProfileController::class, 'createEvent'])->name('events.create');
-            Route::post('/events', [ProfileController::class, 'storeEvent'])->name('events.store');
-
-            // Tickets
-            Route::get('/tickets', [ProfileController::class, 'tickets'])->name('tickets');
-
-            // Notifications
-            Route::get('/notifications', [ProfileController::class, 'notifications'])->name('notifications');
-        });
-});
-
-// ----------------------------
-// Admin Panel Routes
-// ----------------------------
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin']) // Auth + admin
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', \App\Http\Middleware\Admin::class])
     ->group(function () {
+        // Dashboard
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
         // Users
@@ -93,4 +67,38 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin']) // Auth + 
         // Settings
         Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('settings');
         Route::post('/settings', [AdminDashboardController::class, 'updateSettings'])->name('settings.update');
+
+        // Contact Messages
+        Route::prefix('contact-messages')->name('contact-messages.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('index');
+            Route::get('/{contactMessage}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'show'])->name('show');
+            Route::delete('/{contactMessage}', [\App\Http\Controllers\Admin\ContactMessageController::class, 'destroy'])->name('destroy');
+            Route::post('/{contactMessage}/mark-as-read', [\App\Http\Controllers\Admin\ContactMessageController::class, 'markAsRead'])->name('mark-as-read');
+            Route::post('/{contactMessage}/mark-as-unread', [\App\Http\Controllers\Admin\ContactMessageController::class, 'markAsUnread'])->name('mark-as-unread');
+            Route::post('/mark-all-read', [\App\Http\Controllers\Admin\ContactMessageController::class, 'markAllAsRead'])->name('mark-all-read');
+        });
     });
+
+// ----------------------------
+// User Dashboard Routes
+// ----------------------------
+Route::middleware('auth')->group(function () {
+    // User Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Other user dashboard routes with prefix
+    Route::prefix('dashboard')
+        ->name('dashboard.')
+        ->group(function () {
+            // Profile
+            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+            Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+            
+            // Events
+            Route::resource('events', \App\Http\Controllers\EventController::class)
+                ->except(['index', 'show']);
+            
+            // Add other user dashboard routes here as needed
+        });
+});
